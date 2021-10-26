@@ -1,0 +1,35 @@
+#default password
+myUserPassword
+#connect
+mysql -u me -p
+1-3.
+#SQL
+SHOW DATABASES;
+USE dswork;
+4.
+CREATE TABLE Students (
+sno CHAR(8),
+firstname VARCHAR(12) ,
+lastname VARCHAR(15) ,
+phoneno CHAR(10)
+);
+5.
+CREATE TABLE Units(
+unitIndex CHAR(8) ,
+dept CHAR(10) ,
+unitName VARCHAR(40)
+);
+6.
+CREATE TABLE Enrolments(
+unit CHAR(8),
+student CHAR(8) ,
+year CHAR(4) ,
+mark INT(3) ,
+grade CHAR(1)
+);
+
+SHOW TABLES;
+DESCRIBE Students;
+SHOW COLUMNS FROM Students;
+
+SOURCE Prac01tables;

@@ -1,0 +1,39 @@
+/**
+** Prac06Task1.txt
+** Answers for Prac 06
+** Author: C Marteli
+** Modified: 22/09/2021
+**/
+
+//Task 1
+
+// SELECT table1.varsToDisplay, table1.varsToDisplay2, etc
+// FROM table1 
+// INNER JOIN table2
+// ON table1.varToUnite = table2.otherVarToUnite;
+
+//Key words
+>>INNER JOIN
+>>LEFT OUTER JOIN (nulls on right)
+>>RIGHT OUTER JOIN (nulls on left)
+
+Q1.
+//Inner join is best here since we're only interested in actors in starring roles
+
+SELECT p.star,  p.moviename, p.date
+FROM Actor AS a INNER JOIN Performs AS p
+ON a.actorname = p.star;
+
+Q2.
+// Outer left joins as we want all poperties to be displaye but not all offers
+SELECT p.address, p.type, o.date
+FROM Property AS p 
+OUTER LEFT JOIN Offers AS o
+ON p.address = o.address;
+
+Q3.
+// Outer left joins as we want all cruises to be but only rating from ships
+SELECT c.origin, c.destination, c.cost, s.rating
+FROM Cruises AS c 
+OUTER LEFT JOIN Ships AS s
+ON c.shipname = s.shipname;

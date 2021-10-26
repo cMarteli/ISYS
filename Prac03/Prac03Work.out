@@ -1,0 +1,52 @@
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| Test               |
+| dswork             |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+6 rows in set (0.06 sec)
+
+mysql> USE dswork;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> SOURCE create_tables.sql;
+Query OK, 0 rows affected (0.71 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 17
+mysql> SOURCE create_tables.sql;
+ERROR 1050 (42S01): Table 'Dept' already exists
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 17
+mysql> SHOW tables;
++------------------+
+| Tables_in_dswork |
++------------------+
+| Dept             |
+| Enrolments       |
+| Students         |
+| Units            |
++------------------+
+4 rows in set (0.00 sec)
+
+mysql> SOURCE create_tables.sql;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 17
+mysql> SOURCE create_tables.sql;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 16
+mysql> SOURCE create_tables.sql;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 16
+mysql> SOURCE create_tables.sql;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 15
+mysql> SOURCE create_tables.sql;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 15
+mysql> SOURCE create_tables.sql;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 15
+mysql> SOURCE create_tables.sql;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 15
+mysql> clear
+mysql> exit

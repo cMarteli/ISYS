@@ -1,0 +1,480 @@
+mysql> SHOW tables;
+Empty set (0.00 sec)
+
+mysql> SHOW columns;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> SHOW tables;
+Empty set (0.00 sec)
+
+mysql> \. PracTest2Tables_1.sql
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> \. PracTest2Values_1.sql
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.01 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+Query OK, 1 row affected (0.00 sec)
+
+mysql> SHOW tables;
++------------------+
+| Tables_in_dswork |
++------------------+
+| Students         |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> DESC Students;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| stuNo        | char(6)      | NO   | PRI | NULL    |       |
+| firstName    | varchar(12)  | NO   |     | NULL    |       |
+| lastName     | varchar(15)  | NO   |     | NULL    |       |
+| address1     | varchar(10)  | YES  |     | NULL    |       |
+| address2     | varchar(20)  | YES  |     | NULL    |       |
+| address3     | varchar(20)  | YES  |     | NULL    |       |
+| address4     | varchar(20)  | YES  |     | NULL    |       |
+| country      | varchar(20)  | YES  |     | NULL    |       |
+| courseCode   | char(5)      | YES  |     | NULL    |       |
+| phoneNo      | char(10)     | YES  |     | NULL    |       |
+| startDate    | date         | YES  |     | NULL    |       |
+| birthDate    | date         | YES  |     | NULL    |       |
+| fieldDeposit | decimal(8,2) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT stuNo, phoneNo, courseCode WHERE phoneNo IS null;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE phoneNo IS null' at line 1
+mysql> SELECT stuNo, phoneNo, courseCode WHERE phoneNo IS NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE phoneNo IS NULL' at line 1
+mysql> SELECT stuNo, phoneNo, courseCode
+    -> FROM Students 
+    -> WHERE phoneNo IS NULL;
++--------+---------+------------+
+| stuNo  | phoneNo | courseCode |
++--------+---------+------------+
+| 134567 | NULL    | AG3GU      |
++--------+---------+------------+
+1 row in set (0.00 sec)
+
+mysql> DESC Students;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| stuNo        | char(6)      | NO   | PRI | NULL    |       |
+| firstName    | varchar(12)  | NO   |     | NULL    |       |
+| lastName     | varchar(15)  | NO   |     | NULL    |       |
+| address1     | varchar(10)  | YES  |     | NULL    |       |
+| address2     | varchar(20)  | YES  |     | NULL    |       |
+| address3     | varchar(20)  | YES  |     | NULL    |       |
+| address4     | varchar(20)  | YES  |     | NULL    |       |
+| country      | varchar(20)  | YES  |     | NULL    |       |
+| courseCode   | char(5)      | YES  |     | NULL    |       |
+| phoneNo      | char(10)     | YES  |     | NULL    |       |
+| startDate    | date         | YES  |     | NULL    |       |
+| birthDate    | date         | YES  |     | NULL    |       |
+| fieldDeposit | decimal(8,2) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT stuNo, CONCAT(address1, ", ", address2, ", ", address3) AS 'StreetAddress'
+    -> FROM Students;
++--------+--------------------------------------+
+| stuNo  | StreetAddress                        |
++--------+--------------------------------------+
+| 100050 | 59, Frencham Street, Lowesdale       |
+| 134567 | 72, Pelican Road, Austins Ferry      |
+| 200210 | 30, Albacore Crescent, Brayton       |
+| 202146 | 58, Pipeclay Road, Lower Pappinbarra |
+| 202350 | 11, Devon Street, West Lakes         |
+| 204577 | 20, Sinclair Street, Paramatta       |
+| 212466 | 13, Gralow Court, Bakers Creek       |
+| 213688 | 36, Chester Street, Koonyum Range    |
+| 214560 | 57, Maritime Avenue, Caljie          |
+| 223456 | 54, Manchester Road, Bulliac         |
+| 223470 | 21, Garden Place, Serpentine         |
+| 235670 | 45, Panorama Road, Nemingha          |
+| 257930 | 92, Ross Street, Helensvale          |
+| 264620 | 27, Endeavour Drive, Kiana           |
++--------+--------------------------------------+
+14 rows in set (0.00 sec)
+
+mysql> ^C
+mysql> FROM Students
+    -> WHERE courseCode NOT IN ('CS5SU', 'EG5DU', 'AG2PG');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM Students
+WHERE courseCode NOT IN ('CS5SU', 'EG5DU', 'AG2PG')' at line 1
+mysql> SELECT stuNo, CONCAT(address1, ", ", address2, ", ", address3) AS 'StreetAddress'
+    -> FROM Students WHERE courseCode NOT IN ('CS5SU', 'EG5DU', 'AG2PG');
++--------+--------------------------------------+
+| stuNo  | StreetAddress                        |
++--------+--------------------------------------+
+| 134567 | 72, Pelican Road, Austins Ferry      |
+| 200210 | 30, Albacore Crescent, Brayton       |
+| 202146 | 58, Pipeclay Road, Lower Pappinbarra |
+| 212466 | 13, Gralow Court, Bakers Creek       |
+| 213688 | 36, Chester Street, Koonyum Range    |
+| 214560 | 57, Maritime Avenue, Caljie          |
+| 223470 | 21, Garden Place, Serpentine         |
+| 264620 | 27, Endeavour Drive, Kiana           |
++--------+--------------------------------------+
+8 rows in set (0.00 sec)
+
+mysql> DESC Students;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| stuNo        | char(6)      | NO   | PRI | NULL    |       |
+| firstName    | varchar(12)  | NO   |     | NULL    |       |
+| lastName     | varchar(15)  | NO   |     | NULL    |       |
+| address1     | varchar(10)  | YES  |     | NULL    |       |
+| address2     | varchar(20)  | YES  |     | NULL    |       |
+| address3     | varchar(20)  | YES  |     | NULL    |       |
+| address4     | varchar(20)  | YES  |     | NULL    |       |
+| country      | varchar(20)  | YES  |     | NULL    |       |
+| courseCode   | char(5)      | YES  |     | NULL    |       |
+| phoneNo      | char(10)     | YES  |     | NULL    |       |
+| startDate    | date         | YES  |     | NULL    |       |
+| birthDate    | date         | YES  |     | NULL    |       |
+| fieldDeposit | decimal(8,2) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT stuNo, firstName, lastName, courseCode
+    -> FROM Students WHERE courseCode LIKE ('CS%');
++--------+-----------+----------+------------+
+| stuNo  | firstName | lastName | courseCode |
++--------+-----------+----------+------------+
+| 200210 | Christine | Haas     | CS3SU      |
+| 202146 | Michelle  | Mckinley | CS3SU      |
+| 212466 | Nathan    | Rao      | CS2HU      |
+| 213688 | James     | Walker   | CS3SU      |
+| 223470 | Jacki     | Willard  | CS3SU      |
+| 257930 | Sally     | Reed     | CS5SU      |
+| 264620 | Michael   | Thompson | CS3SU      |
++--------+-----------+----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT firstName, lastName, courseCode, DATE_FORMAT(birthDate, '%e %M') AS Birthday 
+    -> FROM Students WHERE courseCode LIKE ('CS%');
++-----------+----------+------------+-------------+
+| firstName | lastName | courseCode | Birthday    |
++-----------+----------+------------+-------------+
+| Christine | Haas     | CS3SU      | 14 August   |
+| Michelle  | Mckinley | CS3SU      | 22 April    |
+| Nathan    | Rao      | CS2HU      | 23 February |
+| James     | Walker   | CS3SU      | 22 March    |
+| Jacki     | Willard  | CS3SU      | 3 May       |
+| Sally     | Reed     | CS5SU      | 12 June     |
+| Michael   | Thompson | CS3SU      | 5 July      |
++-----------+----------+------------+-------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT firstName, lastName, courseCode, DATE_FORMAT(birthDate, '%W, %e %M %Y') AS 'Birthday'
+    -> FROM Students WHERE courseCode LIKE ('CS%');
++-----------+----------+------------+--------------------------+
+| firstName | lastName | courseCode | Birthday                 |
++-----------+----------+------------+--------------------------+
+| Christine | Haas     | CS3SU      | Friday, 14 August 1998   |
+| Michelle  | Mckinley | CS3SU      | Thursday, 22 April 1999  |
+| Nathan    | Rao      | CS2HU      | Monday, 23 February 1998 |
+| James     | Walker   | CS3SU      | Monday, 22 March 1999    |
+| Jacki     | Willard  | CS3SU      | Saturday, 3 May 1997     |
+| Sally     | Reed     | CS5SU      | Tuesday, 12 June 2018    |
+| Michael   | Thompson | CS3SU      | Monday, 5 July 1999      |
++-----------+----------+------------+--------------------------+
+7 rows in set (0.00 sec)
+
+mysql> DESC Students;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| stuNo        | char(6)      | NO   | PRI | NULL    |       |
+| firstName    | varchar(12)  | NO   |     | NULL    |       |
+| lastName     | varchar(15)  | NO   |     | NULL    |       |
+| address1     | varchar(10)  | YES  |     | NULL    |       |
+| address2     | varchar(20)  | YES  |     | NULL    |       |
+| address3     | varchar(20)  | YES  |     | NULL    |       |
+| address4     | varchar(20)  | YES  |     | NULL    |       |
+| country      | varchar(20)  | YES  |     | NULL    |       |
+| courseCode   | char(5)      | YES  |     | NULL    |       |
+| phoneNo      | char(10)     | YES  |     | NULL    |       |
+| startDate    | date         | YES  |     | NULL    |       |
+| birthDate    | date         | YES  |     | NULL    |       |
+| fieldDeposit | decimal(8,2) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT stuNo, firstName, startDate
+    -> FROM Students WHERE ROUND(DATEDIFF(SYSDATE(), startDate)/365.25)>4;
++--------+-----------+------------+
+| stuNo  | firstName | startDate  |
++--------+-----------+------------+
+| 200210 | Christine | 2016-03-15 |
+| 204577 | Masatoshi | 2016-02-25 |
+| 213688 | James     | 2015-04-20 |
+| 235670 | Leondro   | 2016-06-12 |
+| 257930 | Sally     | 2016-03-15 |
+| 264620 | Michael   | 2016-03-15 |
++--------+-----------+------------+
+6 rows in set (0.01 sec)
+
+mysql> FROM Students WHERE ROUND(DATEDIFF(SYSDATE(), startDate)/365.25)>=4;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM Students WHERE ROUND(DATEDIFF(SYSDATE(), startDate)/365.25)>=4' at line 1
+mysql> SELECT stuNo, firstName, startDate
+    -> FROM Students WHERE (DATEDIFF(SYSDATE(), startDate)/365.25 >= 4);
++--------+-----------+------------+
+| stuNo  | firstName | startDate  |
++--------+-----------+------------+
+| 134567 | Eva       | 2017-03-10 |
+| 200210 | Christine | 2016-03-15 |
+| 204577 | Masatoshi | 2016-02-25 |
+| 213688 | James     | 2015-04-20 |
+| 235670 | Leondro   | 2016-06-12 |
+| 257930 | Sally     | 2016-03-15 |
+| 264620 | Michael   | 2016-03-15 |
++--------+-----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> DESC Students;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| stuNo        | char(6)      | NO   | PRI | NULL    |       |
+| firstName    | varchar(12)  | NO   |     | NULL    |       |
+| lastName     | varchar(15)  | NO   |     | NULL    |       |
+| address1     | varchar(10)  | YES  |     | NULL    |       |
+| address2     | varchar(20)  | YES  |     | NULL    |       |
+| address3     | varchar(20)  | YES  |     | NULL    |       |
+| address4     | varchar(20)  | YES  |     | NULL    |       |
+| country      | varchar(20)  | YES  |     | NULL    |       |
+| courseCode   | char(5)      | YES  |     | NULL    |       |
+| phoneNo      | char(10)     | YES  |     | NULL    |       |
+| startDate    | date         | YES  |     | NULL    |       |
+| birthDate    | date         | YES  |     | NULL    |       |
+| fieldDeposit | decimal(8,2) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+13 rows in set (0.00 sec)
+
+mysql> SELECT firstName, lastName, fieldDeposit AS 'OldDeposit', 
+    -> ROUND(fieldDeposit + (fieldDeposit*0.10)) AS 'NewDeposit'
+    -> FROM Students;
++-----------+-------------+------------+------------+
+| firstName | lastName    | OldDeposit | NewDeposit |
++-----------+-------------+------------+------------+
+| John      | Hendrickson |    1700.00 |       1870 |
+| Eva       | Pulaski     |     900.00 |        990 |
+| Christine | Haas        |     800.00 |        880 |
+| Michelle  | Mckinley    |    1900.00 |       2090 |
+| Irving    | Stern       |    2100.00 |       2310 |
+| Masatoshi | Yoshimura   |    2100.00 |       2310 |
+| Nathan    | Rao         |     500.00 |        550 |
+| James     | Walker      |       NULL |       NULL |
+| Ragnar    | Bower       |    1400.00 |       1540 |
+| Eva       | Kurtz       |    1800.00 |       1980 |
+| Jacki     | Willard     |     800.00 |        880 |
+| Leondro   | Wall        |    1750.00 |       1925 |
+| Sally     | Reed        |     900.00 |        990 |
+| Michael   | Thompson    |    1000.00 |       1100 |
++-----------+-------------+------------+------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT firstName, lastName, ROUND(fieldDeposit) AS 'OldDeposit', 
+    -> ROUND(fieldDeposit + (fieldDeposit*0.10)) AS 'NewDeposit'
+    -> FROM Students;
++-----------+-------------+------------+------------+
+| firstName | lastName    | OldDeposit | NewDeposit |
++-----------+-------------+------------+------------+
+| John      | Hendrickson |       1700 |       1870 |
+| Eva       | Pulaski     |        900 |        990 |
+| Christine | Haas        |        800 |        880 |
+| Michelle  | Mckinley    |       1900 |       2090 |
+| Irving    | Stern       |       2100 |       2310 |
+| Masatoshi | Yoshimura   |       2100 |       2310 |
+| Nathan    | Rao         |        500 |        550 |
+| James     | Walker      |       NULL |       NULL |
+| Ragnar    | Bower       |       1400 |       1540 |
+| Eva       | Kurtz       |       1800 |       1980 |
+| Jacki     | Willard     |        800 |        880 |
+| Leondro   | Wall        |       1750 |       1925 |
+| Sally     | Reed        |        900 |        990 |
+| Michael   | Thompson    |       1000 |       1100 |
++-----------+-------------+------------+------------+
+14 rows in set (0.00 sec)
+
+mysql> SELECT firstName, lastName, ROUND(fieldDeposit) AS 'OldDeposit', 
+    -> ROUND(fieldDeposit + (fieldDeposit*0.10)) AS 'NewDeposit'
+    -> FROM Students WHERE NewDeposit > 2000;
+ERROR 1054 (42S22): Unknown column 'NewDeposit' in 'where clause'
+mysql> SELECT firstName, lastName, ROUND(fieldDeposit) AS 'OldDeposit', 
+    -> ROUND(fieldDeposit + (fieldDeposit*0.10)) AS 'NewDeposit'
+    -> FROM Students WHERE ROUND(fieldDeposit + (fieldDeposit*0.10)) > 2000;
++-----------+-----------+------------+------------+
+| firstName | lastName  | OldDeposit | NewDeposit |
++-----------+-----------+------------+------------+
+| Michelle  | Mckinley  |       1900 |       2090 |
+| Irving    | Stern     |       2100 |       2310 |
+| Masatoshi | Yoshimura |       2100 |       2310 |
++-----------+-----------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> show tables;
++------------------+
+| Tables_in_dswork |
++------------------+
+| Students         |
++------------------+
+1 row in set (0.00 sec)
+
+mysql> \. PracTest2Task2_19598552
+ERROR: 
+Failed to open file 'PracTest2Task2_19598552', error: 2
+mysql> \. PracTest2Task2_19598552.sql
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(deptno)
+)' at line 6
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'empDigit CHAR(1)       	NOT NULL,
+    firstName VARCHAR(15) 	NOT NULL,
+    lastn' at line 4
+mysql> \. PracTest2Task2_19598552.sql
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(deptno)
+)' at line 6
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'empDigit CHAR(1)       	NOT NULL,
+    firstName VARCHAR(15) 	NOT NULL,
+    lastn' at line 4
+mysql> \. PracTest2Task2_19598552.sql
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(deptno)
+)' at line 6
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'empDigit CHAR(1)       	NOT NULL,
+    firstName VARCHAR(15) 	NOT NULL,
+    lastn' at line 4
+mysql> source PracTest2Task2_19598552.sql
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(deptno)
+)' at line 6
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'empDigit CHAR(1)       	NOT NULL,
+    firstName VARCHAR(15) 	NOT NULL,
+    lastn' at line 4
+mysql> source PracTest2Task2_19598552.sql
+Query OK, 0 rows affected (0.04 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'empDigit CHAR(1) NOT NULL,
+    firstName VARCHAR(15) NOT NULL,
+    lastname VARC' at line 4
+mysql> source PracTest2Task2_19598552.sql
+ERROR 1050 (42S01): Table 'Dept' already exists
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'empDigit CHAR(1) NOT NULL,
+    firstName VARCHAR(15) NOT NULL,
+    lastname VARC' at line 4
+mysql> source PracTest2Task2_19598552.sql
+ERROR 1050 (42S01): Table 'Dept' already exists
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'empDigit CHAR(1),
+    firstName VARCHAR(15),
+    lastname VARCHAR(15),
+    salar' at line 4
+mysql> source PracTest2Task2_19598552.sql
+ERROR 1050 (42S01): Table 'Dept' already exists
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'empDigit CHAR(1),
+    firstName VARCHAR(15),
+    lastname VARCHAR(15),
+	salary D' at line 4
+mysql> source PracTest2Task2_19598552.sql
+ERROR 1050 (42S01): Table 'Dept' already exists
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'empDigit CHAR(1),
+    firstName VARCHAR(15),
+    lastname VARCHAR(15),
+	salary D' at line 4
+mysql> source PracTest2Task2_19598552.sql
+ERROR 1050 (42S01): Table 'Dept' already exists
+mysql> drop table Dept;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> source PracTest2Task2_19598552.sql
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> drop table Dept;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> source PracTest2Task2_19598552.sql
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'empDigit CHAR(1),
+    firstName VARCHAR(15),
+    lastname VARCHAR(15),
+	salary D' at line 3
+mysql> source PracTest2Task2_19598552.sql
+Query OK, 0 rows affected (0.02 sec)
+
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'empDigit CHAR(1),
+    firstName VARCHAR(15),
+    lastname VARCHAR(15),
+	salary D' at line 3
+mysql> source PracTest2Task2_19598552.sql
+ERROR 1050 (42S01): Table 'Dept' already exists
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> source PracTest2Task2_19598552.sql
+ERROR 1050 (42S01): Table 'Dept' already exists
+ERROR 1050 (42S01): Table 'Emp' already exists
+mysql> drop table Dept; drop table Emp;
+ERROR 1217 (23000): Cannot delete or update a parent row: a foreign key constraint fails
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> source PracTest2Task2_19598552.sql
+ERROR 1050 (42S01): Table 'Dept' already exists
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> drop table Dept; drop table Emp;
+ERROR 1217 (23000): Cannot delete or update a parent row: a foreign key constraint fails
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> source PracTest2Task2_19598552.sql
+ERROR 1050 (42S01): Table 'Dept' already exists
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> INSERT INTO Emp VALUES
+    -> ('00010','C','Christine','Haas',312750,'A1000');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`dswork`.`Emp`, CONSTRAINT `FK_deptNo` FOREIGN KEY (`deptNo`) REFERENCES `Dept` (`deptno`))
+mysql> INSERT INTO Dept VALUES
+    -> ('A1000','Apple Computers HQ','0406335226');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> INSERT INTO Emp VALUES
+    -> ('00010','C','John','Smith',60750,'A1000');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> SELECT * from Emp;
++-------+----------+-----------+----------+----------+--------+
+| empno | empDigit | firstName | lastname | salary   | deptNo |
++-------+----------+-----------+----------+----------+--------+
+| 00010 | C        | John      | Smith    | 60750.00 | A1000  |
++-------+----------+-----------+----------+----------+--------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * from Dept;
++--------+--------------------+------------+
+| deptno | deptBuilding       | telephone  |
++--------+--------------------+------------+
+| A1000  | Apple Computers HQ | 0406335226 |
++--------+--------------------+------------+
+1 row in set (0.00 sec)
+
