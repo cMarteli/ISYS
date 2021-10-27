@@ -1,63 +1,65 @@
 
 /* queries.sql: SQL file for table creation in Assignment Olympics games */
 -- create Country table
-DROP DATABASE Olympics;
+#pager less -SFX
+DROP DATABASE IF EXISTS Olympics;
 CREATE DATABASE Olympics;
 USE Olympics;
 CREATE TABLE Country(
 	countryID VARCHAR(60) NOT NULL,
 	ranking SMALLINT,
-	totalMedals SMALLINT,
+	gold SMALLINT,
+	silver SMALLINT,
+	bronze SMALLINT,
 	PRIMARY KEY(countryID)
 );
--- create Olympics table
-CREATE TABLE Olympics(
-	olympicsID CHAR(10) NOT NULL,
-	yearHeld YEAR,
-	city VARCHAR(50),
-	season CHAR(2), -- can be Summer or Winter
-	isPara BOOLEAN, -- true for Paralympics and false for not
-	countryID VARCHAR(60),
-	PRIMARY KEY(olympicsID),
-	FOREIGN KEY(countryID) REFERENCES Country(countryID)
+
+-- create Discipline table
+CREATE TABLE Discipline(
+	disciplineID  VARCHAR(60) NOT NULL,
+	maleCount SMALLINT,
+	femaleCount SMALLINT,
+	genderOrType VARCHAR(20),
+	PRIMARY KEY(disciplineID)
 );
 
 -- create Athlete table
 CREATE TABLE Athlete(
 	athleteID CHAR(6) NOT NULL,
-	surname VARCHAR(12) NOT NULL,
-	fullName VARCHAR(90) NOT NULL,
+	surname VARCHAR(30) NOT NULL,
+	givenNames VARCHAR(150),
 	discipline VARCHAR(60),
-	country VARCHAR(60),
+	country VARCHAR(60) NOT NULL,
 	PRIMARY KEY(athleteID),
+	FOREIGN KEY(discipline) REFERENCES Discipline(disciplineID),
 	FOREIGN KEY(country) REFERENCES Country(countryID)
 );
 
 -- create Coach table
 CREATE TABLE Coach(
 	coachID  CHAR(6) NOT NULL,
-	firstName VARCHAR(12),
-	lastName VARCHAR(15) NOT NULL,
-	country VARCHAR(60),
+	surname VARCHAR(30) NOT NULL,
+	givenNames VARCHAR(150),
+	discipline VARCHAR(60),
+	country VARCHAR(60) NOT NULL,
 	PRIMARY KEY(coachID),
+	FOREIGN KEY(discipline) REFERENCES Discipline(disciplineID),
 	FOREIGN KEY(country) REFERENCES Country(countryID)
 );
 
--- create Event table
-CREATE TABLE Event(
-	eventID  CHAR(6) NOT NULL,
-	eventDate DATE,
-	eventTime TIME,
-	gender CHAR(2),
-	PRIMARY KEY(eventID)
-);
+DROP PROCEDURE IF EXISTS show;
+DELIMITER $$
+CREATE PROCEDURE CopyTable(IN _mytable VARCHAR(64), _table_name VARCHAR(64))
+BEGIN
+    SET FOREIGN_KEY_CHECKS=0;
+    SET @stmt = CONCAT('DROP TABLE IF EXISTS ',_table_name);
+    PREPARE stmt1 FROM @stmt;
+    EXECUTE stmt1;
+    SET FOREIGN_KEY_CHECKS=1;
+    SET @stmt = CONCAT('CREATE TABLE ',_table_name,' as select * from ', _mytable);
+    PREPARE stmt1 FROM @stmt;
+    EXECUTE stmt1;
+    DEALLOCATE PREPARE stmt1;
+END$$
+DELIMITER ;
 
--- create Medal table
-CREATE TABLE Medal(
-	medalID  CHAR(6) NOT NULL,
-	denom CHAR(2),
-	eventID  CHAR(6),
-	country VARCHAR(60),
-	PRIMARY KEY(medalID),
-	FOREIGN KEY(eventID) REFERENCES Event(eventID)
-);

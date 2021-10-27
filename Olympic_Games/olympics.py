@@ -1,26 +1,22 @@
 import mysql.connector
 from getpass import getpass
 from sqlite3 import OperationalError
-
-def executeScriptsFromFile(filename):
+#IMPORT: filename (String)
+#EXPORT:
+#ASSERTION: Opens a csv file and reads and creates a sql query file.
+def loadSqlScript(filename):
     # Open and read the file as a single buffer
-    fd = open(filename, 'r')
-    sqlFile = fd.read()
-    fd.close()
-
-    # all SQL commands (split on ';')
-    sqlCommands = sqlFile.split(';')
-
+    file = open(filename, 'r')
+    sqlFile = file.read()
+    file.close()
+    sqlQueries = sqlFile.split(';') # SQL queries split at ';'
     # Execute every command from the input file
-    for command in sqlCommands:
-        # This will skip and report errors
-        # For example, if the tables do not yet exist, this will skip over
-        # the DROP TABLE commands
+    for command in sqlQueries:
         try:
             cursor.execute(command)
         except OperationalError as msg:
             print("Command skipped: ", msg)
-
+#connection
 try:
     #connection string DEBUG
     conn = mysql.connector.connect(
@@ -29,25 +25,35 @@ try:
         password='Bolony@1',
         database='Olympics'
         )
+
     #connection string
     # conn = mysql.connector.connect(
     #     host="localhost",
     #     user=input("Enter username: "),
-    #     password=getpass("Enter password: "),
-    #     database='dswork'
+    #     password=getpass("Enter password: ")
     #     )
+
     if conn.is_connected():
         conn.autocommit = True #turns auto commit on
-
         cursor = conn.cursor() #cursor instance
+        cursor = conn.cursor(buffered=True)
 
-        #cursor.execute("SELECT DATABASE()") # show the database you are connected to
-        #dbName = cursor.fetchone()
-        #print("Succesfully connected to: ", dbName)
+        print("Creating database and tables...")
+        loadSqlScript("newFile.sql")
 
-        #executeScriptsFromFile("queries.sql")
-        #executeScriptsFromFile("InMedals.sql")
-        executeScriptsFromFile("InAthletes.sql")
+        # print("Loading Countries...")
+        # loadSqlScript("inCountries.sql")
+
+        # print("Loading Disciplines...")
+        # loadSqlScript("inDisciplines.sql")
+
+        # print("Loading Athletes...")
+        # loadSqlScript("small.sql")
+
+        # print("Loading Coaches...")
+        # loadSqlScript("inCoaches.sql")
+
+        print("COMPLETE")
 
 
 except mysql.connector.Error as err: #error handling
@@ -55,10 +61,6 @@ except mysql.connector.Error as err: #error handling
 
 finally: #close
     if conn.is_connected():
-        #commits changes if autocommit is off
-        # conn.commit()
         cursor.close()
         conn.close()
         print("\n******* Good bye *******")
-
-

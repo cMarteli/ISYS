@@ -1,3 +1,4 @@
+#USE dswork;
 #creates tables
 
 CREATE TABLE Students (

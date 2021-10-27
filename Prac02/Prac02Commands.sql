@@ -1,11 +1,9 @@
 #Prac02Commands
 #Author: C Marteli 19598552 Created:02/08/2021
 
-#CREATE USER 'me'@'localhost' IDENTIFIED BY 'qQ$7D)?JhB&kL-VK';
-
 #connect
 mysql -u me -p
-#default password = qQ$7D)?JhB&kL-VK
+#default password = myUserPassword
 USE dswork;
 SOURCE Prac02Tables;
 
@@ -65,7 +63,7 @@ SELECT student, mark FROM Enrolments WHERE mark>60;
 
 SELECT student, mark FROM Enrolments WHERE mark>=66 AND mark<=85;
 
-#modifying tuples, again
+#modifying columns
 UPDATE Units SET unitIndex = 'ISYS1020' WHERE unitName = 'Database Systems';
 
 #remove James Bond
@@ -78,8 +76,3 @@ DELETE FROM Units WHERE unitIndex = 'ISYS1020';
 SELECT * FROM Units;
 SELECT * FROM Enrolments;
 #no effects on enrolments (tuples not linked)
-
-# TO rename a column
-# ALTER TABLE Teams RENAME COLUMN name TO teamName;
-#
-#
