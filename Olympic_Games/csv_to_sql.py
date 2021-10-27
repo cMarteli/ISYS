@@ -1,12 +1,16 @@
-import csv
-import json
-import re
 #**********************************
+# Author: Caio Marteli 19598552
 #**Python Script to make sql input files from .csv data
 #**********************************
 
+import csv
+import json
+import re
+
+
 #**********************************
 #**DISCIPLINE
+# Formats and outputs to a .sql file
 #**********************************
 insert_stmt = (
     "INSERT INTO Discipline VALUES(%s, %s, %s, null);"
@@ -31,6 +35,7 @@ for row in reader: # row = [Name, NOC, Discipline]
     outFile.write(insert_stmt % (discipline, maleNum, femaleNum) + "\n")
 #**********************************
 #**COUNTRY
+# Formats and outputs to a .sql file
 #**********************************
 insert_stmt = (
     "INSERT INTO Country VALUES (%s, %s, %s, %s, %s);"
@@ -55,6 +60,7 @@ for row in reader: # row = [country, rank, totalMedals]
     outFile.write(insert_stmt % (id, rank, gold, silver, bronze) + "\n")
 #**********************************
 #**ATHLETE
+# Formats and outputs to a .sql file
 #**********************************
 insert_stmt = (
     "INSERT INTO Athlete VALUES (%s, %s, %s, %s, %s);"
@@ -81,6 +87,7 @@ for row in reader: # row = [Name, NOC, Discipline]
 
 #**********************************
 #**COACHES
+# Formats and outputs to a .sql file
 #**********************************
 insert_stmt = (
     "INSERT INTO Coach VALUES (%s, %s, %s, %s, %s);"

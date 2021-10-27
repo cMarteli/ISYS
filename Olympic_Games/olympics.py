@@ -1,16 +1,24 @@
+#**********************************
+# Author: Caio Marteli 19598552
+# Python Script to load sql database
+#**********************************
+
 import mysql.connector
 from getpass import getpass
 from sqlite3 import OperationalError
-#IMPORT: filename (String)
-#EXPORT:
-#ASSERTION: Opens a csv file and reads and creates a sql query file.
+
+INPUT_FILE_NAME = "loadAll.sql" #HARDCODED - This is the name of the input SQL file
+#******************************
+# IMPORT: filename (String)
+# EXPORT: none
+# ASSERTION: Opens a csv file and reads it then creates a sql query file.
+#******************************
 def loadSqlScript(filename):
     # Open and read the file as a single buffer
     file = open(filename, 'r')
     sqlFile = file.read()
     file.close()
-    sqlQueries = sqlFile.split(';') # SQL queries split at ';'
-    # Execute every command from the input file
+    sqlQueries = sqlFile.split(';')
     for command in sqlQueries:
         try:
             cursor.execute(command)
@@ -18,20 +26,12 @@ def loadSqlScript(filename):
             print("Command skipped: ", msg)
 #connection
 try:
-    #connection string DEBUG
+    #Attempts to connect to mysqld server
     conn = mysql.connector.connect(
         host="localhost",
-        user="caio",
-        password='Bolony@1',
-        database='Olympics'
+        user=input("Enter username: "),
+        password=getpass("Enter password: ")
         )
-
-    #connection string
-    # conn = mysql.connector.connect(
-    #     host="localhost",
-    #     user=input("Enter username: "),
-    #     password=getpass("Enter password: ")
-    #     )
 
     if conn.is_connected():
         conn.autocommit = True #turns auto commit on
@@ -39,20 +39,7 @@ try:
         cursor = conn.cursor(buffered=True)
 
         print("Creating database and tables...")
-        loadSqlScript("newFile.sql")
-
-        # print("Loading Countries...")
-        # loadSqlScript("inCountries.sql")
-
-        # print("Loading Disciplines...")
-        # loadSqlScript("inDisciplines.sql")
-
-        # print("Loading Athletes...")
-        # loadSqlScript("small.sql")
-
-        # print("Loading Coaches...")
-        # loadSqlScript("inCoaches.sql")
-
+        loadSqlScript(INPUT_FILE_NAME)
         print("COMPLETE")
 
 

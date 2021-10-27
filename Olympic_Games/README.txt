@@ -16,3 +16,12 @@ To run:
 
 Run the program using python interpreter.
 :~/$ python3 olympics.py
+
+
+MANUAL MODE
+//connect to mysql
+:~/$ mysql -u me -p
+//then enter password
+:~/$ <enter password>
+// source file
+:~/$ SOURCE loadAll.sql
