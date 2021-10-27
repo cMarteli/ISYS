@@ -1,7 +1,25 @@
 import mysql.connector
-import csv
 from getpass import getpass
+from sqlite3 import OperationalError
 
+def executeScriptsFromFile(filename):
+    # Open and read the file as a single buffer
+    fd = open(filename, 'r')
+    sqlFile = fd.read()
+    fd.close()
+
+    # all SQL commands (split on ';')
+    sqlCommands = sqlFile.split(';')
+
+    # Execute every command from the input file
+    for command in sqlCommands:
+        # This will skip and report errors
+        # For example, if the tables do not yet exist, this will skip over
+        # the DROP TABLE commands
+        try:
+            cursor.execute(command)
+        except OperationalError as msg:
+            print("Command skipped: ", msg)
 
 try:
     #connection string DEBUG
@@ -19,51 +37,17 @@ try:
     #     database='dswork'
     #     )
     if conn.is_connected():
-        #turns auto commit on
-        conn.autocommit = True
-        #cursor instance
-        cursor = conn.cursor()
-        # show the database you are connected to
-        cursor.execute("SELECT DATABASE()")
-        dbName = cursor.fetchone()
-        print("Succesfully connected to: ", dbName)
+        conn.autocommit = True #turns auto commit on
 
-        #init vars
+        cursor = conn.cursor() #cursor instance
 
-        select_stmt = "SELECT * FROM Athlete"
+        #cursor.execute("SELECT DATABASE()") # show the database you are connected to
+        #dbName = cursor.fetchone()
+        #print("Succesfully connected to: ", dbName)
 
-        insert_stmt = (
-            "INSERT INTO Athlete (athleteCode, fullName,country,discipline)"
-            "VALUES (%s, %s, %s, %s)"
-        )
-        create_table = (
-        "DROP TABLE IF EXISTS Athlete;"
-        "CREATE TABLE Athlete("
-        "athleteCode CHAR(8) NOT NULL,"
-        "fullName VARCHAR(150) NOT NULL,"
-        "country VARCHAR(57),"
-        "discipline VARCHAR(30),"
-        "PRIMARY KEY(athleteCode) )"
-        )
-
-        load_data = (
-        "LOAD DATA INFILE 'data.csv' INTO TABLE tbl_name"
-        "FIELDS TERMINATED BY ',' "
-        "ENCLOSED BY ''"''""
-        "LINES TERMINATED BY '\r\n'"
-        "IGNORE 1 LINES;"
-        )
-        #run
-        cursor.execute(create_table)
-
-        #path = "InAthletes.sql"
-
-        #cursor.execute("SOURCE " + path + ";")
-        #cursor.executemany(insert_stmt, data)
-        #print(insert_stmt, data)
-        #prints
-        # for x in cursor:
-        #     print(x)
+        #executeScriptsFromFile("queries.sql")
+        #executeScriptsFromFile("InMedals.sql")
+        executeScriptsFromFile("InAthletes.sql")
 
 
 except mysql.connector.Error as err: #error handling
@@ -77,24 +61,4 @@ finally: #close
         conn.close()
         print("\n******* Good bye *******")
 
-
-
-# def load_csv():
-
-#     path = "Athletes.csv"
-#     file = open(path, newline='')
-#     reader = csv.reader(file)
-
-#     header = next(reader) #the first line is the header
-
-#     data = []
-#     for row in reader:
-#         # row = [Name, NOC, Discipline]
-#         name = row[0]
-#         noc = row[1]
-#         discipline = row[2]
-
-#         data.append([name,noc, discipline])
-#     athleteNo = 78
-#     print(data[athleteNo-2])
 
