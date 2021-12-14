@@ -1,4 +1,4 @@
-/* queries.sql: SQL file for table creation in Assignment Olympics games */
+/* loadAll.sql: SQL file for table creation and sample data input in Assignment Olympics games */
 -- create Country table
 #pager less -SFX
 DROP DATABASE IF EXISTS Olympics;
