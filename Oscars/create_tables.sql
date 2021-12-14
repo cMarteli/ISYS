@@ -1,48 +1,41 @@
 
-/* queries.sql: SQL file for table creation in Assignment Olympics games */
+/* queries.sql: SQL file for table creation in Assignment Oscars */
 -- create Country table
 #pager less -SFX
-DROP DATABASE IF EXISTS Olympics;
-CREATE DATABASE Olympics;
-USE Olympics;
-CREATE TABLE Country(
-	countryID VARCHAR(60) NOT NULL,
-	ranking SMALLINT,
-	gold SMALLINT,
-	silver SMALLINT,
-	bronze SMALLINT,
-	PRIMARY KEY(countryID)
+DROP DATABASE IF EXISTS Oscars;
+CREATE DATABASE Oscars;
+USE Oscars;
+
+-- create Oscar table
+CREATE TABLE Ceremony(
+	oscarID  CHAR(6),	
+	oscarYear YEAR NOT NULL,
+	venue VARCHAR(30),
+	PRIMARY KEY(oscarID)
+);
+-- create Film table
+CREATE TABLE Film(
+	filmName  VARCHAR(60),
+	filmYear YEAR,
+	CONSTRAINT filmID PRIMARY KEY(filmName, filmYear)
 );
 
--- create Discipline table
-CREATE TABLE Discipline(
-	disciplineID  VARCHAR(60) NOT NULL,
-	maleCount SMALLINT,
-	femaleCount SMALLINT,
-	genderOrType VARCHAR(20),
-	PRIMARY KEY(disciplineID)
-);
-
--- create Athlete table
-CREATE TABLE Athlete(
-	athleteID CHAR(6) NOT NULL,
-	surname VARCHAR(30) NOT NULL,
+-- create Nominee table auto adds id
+CREATE TABLE Nominee(
+	nomID INT AUTO_INCREMENT,
+	surname VARCHAR(30),
 	givenNames VARCHAR(150),
-	discipline VARCHAR(60),
-	country VARCHAR(60) NOT NULL,
-	PRIMARY KEY(athleteID),
-	FOREIGN KEY(discipline) REFERENCES Discipline(disciplineID),
-	FOREIGN KEY(country) REFERENCES Country(countryID)
+	dob DATE,
+	PRIMARY KEY(nomID)
 );
 
--- create Coach table
-CREATE TABLE Coach(
-	coachID  CHAR(6) NOT NULL,
-	surname VARCHAR(30) NOT NULL,
-	givenNames VARCHAR(150),
-	discipline VARCHAR(60),
-	country VARCHAR(60) NOT NULL,
-	PRIMARY KEY(coachID),
-	FOREIGN KEY(discipline) REFERENCES Discipline(disciplineID),
-	FOREIGN KEY(country) REFERENCES Country(countryID)
+-- create Nominations table need to add FKs
+CREATE TABLE Nominations(
+	oscarID  CHAR(6),
+	nomID INT,
+	category VARCHAR(60) NOT NULL,
+	isWinner BOOLEAN NOT NULL,
+	PRIMARY KEY(nomID, oscarID),
+	FOREIGN KEY(nomID) REFERENCES Nominee(nomID) ON DELETE CASCADE,
+	FOREIGN KEY(oscarID) REFERENCES Ceremony(oscarID) ON DELETE CASCADE
 );
