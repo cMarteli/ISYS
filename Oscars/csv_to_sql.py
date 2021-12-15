@@ -9,16 +9,15 @@ import re
 
 
 #**********************************
-#**DISCIPLINE
+#**FILM
 # Formats and outputs to a .sql file
 #**********************************
 insert_stmt = (
-    "INSERT INTO Discipline VALUES(%s, %s, %s, null);"
+    "INSERT INTO Film VALUES(%s, %s);"
 )
-#need to add gender field
 
-path = "Tables/Entries.csv"
-outputPath = "inDisciplines.sql"
+path = "Tables/oscar_data.csv"
+outputPath = "inFilms.sql"
 
 inFile = open(path, newline='')
 reader = csv.reader(inFile)
@@ -27,14 +26,13 @@ outFile = open(outputPath, 'w')
 
 data = []
 #json wraps into sql safe strings
-for row in reader: # row = [Name, NOC, Discipline]
-    discipline = json.dumps(row[0])
-    maleNum = row[1]
-    femaleNum = row[2]
-    print(insert_stmt % (discipline, maleNum, femaleNum))
-    outFile.write(insert_stmt % (discipline, maleNum, femaleNum) + "\n")
+for row in reader: # row = [filmName,filmYear]
+    fName = json.dumps(row[5])
+    fYear = row[0]
+    print(insert_stmt % (fName, fYear))
+    outFile.write(insert_stmt % (fName, fYear) + "\n")
 #**********************************
-#**COUNTRY
+#**NOMINEE
 # Formats and outputs to a .sql file
 #**********************************
 insert_stmt = (
