@@ -1,3 +1,43 @@
+/* queries.sql: SQL file for data entry in Assignment Oscars */
+/*Author: C Marteli 19598552 Created: 15/12/2021*/
+
+-- Fills ceremony table with data of the past 3 years
+-- oscarID, Year, Venue
+INSERT INTO Ceremony VALUES(90, 2019, "Dolby Theatre");
+INSERT INTO Ceremony VALUES(91, 2020, "Dolby Theatre");
+INSERT INTO Ceremony VALUES(92, 2021, "Dolby Theatre/Union Station");
+
+-- Fills Category table with sample data
+-- categoryName, subcategory
+INSERT INTO Category VALUES("ACTOR IN A LEADING ROLE", "Acting");
+INSERT INTO Category VALUES("ACTOR IN A SUPPORTING ROLE", "Acting");
+INSERT INTO Category VALUES("ACTRESS IN A LEADING ROLE", "Acting");
+INSERT INTO Category VALUES("ACTRESS IN A SUPPORTING ROLE", "Acting");
+INSERT INTO Category VALUES("DIRECTING", null);
+INSERT INTO Category VALUES("FILM EDITING", null);
+INSERT INTO Category VALUES("BEST PICTURE", null);
+
+-- Fills Film table with sample data
+-- filmName, filmYear, oscarID
+INSERT INTO Film VALUES("Pain and Glory", 2019, 92);
+INSERT INTO Film VALUES("Once upon a Time...in Hollywood", 2019, 92);
+INSERT INTO Film VALUES("Marriage Story", 2019, 92);
+INSERT INTO Film VALUES("Joker", 2019, 92);
+INSERT INTO Film VALUES("The Two Popes", 2019, 92);
+INSERT INTO Film VALUES("A Beautiful Day in the Neighborhood", 2019, 92);
+INSERT INTO Film VALUES("The Irishman", 2019, 92);
+INSERT INTO Film VALUES("Harriet", 2019, 92);
+INSERT INTO Film VALUES("Little Women", 2019, 92);
+INSERT INTO Film VALUES("Bombshell", 2019, 92);
+INSERT INTO Film VALUES("Judy", 2019, 92);
+INSERT INTO Film VALUES("Richard Jewell", 2019, 92);
+INSERT INTO Film VALUES("Jojo Rabbit", 2019, 92);
+INSERT INTO Film VALUES("1917", 2019, 92);
+INSERT INTO Film VALUES("Parasite", 2019, 92);
+INSERT INTO Film VALUES("Ford v Ferrari", 2019, 92);
+
+-- Fills Nominee table with sample data
+-- ID, firstName, lastName, dob
 INSERT INTO Nominee VALUES(6897570, "Antonio", "Banderas", null);
 INSERT INTO Nominee VALUES(6897571, "Leonardo", "DiCaprio", null);
 INSERT INTO Nominee VALUES(6897572, "Adam", "Driver", null);
@@ -33,11 +73,12 @@ INSERT INTO Nominee VALUES(6897604, "Amy", "Pascal", null);
 INSERT INTO Nominee VALUES(6897605, "Noah", "Baumbach", null);
 INSERT INTO Nominee VALUES(6897607, "David", "Heyman", null);
 
-
+-- Fills Nominations table with sample data
+-- nomID, ID, categoryName, isWinner
 INSERT INTO Nominations VALUES(0, 6897570,"Banderas", "ACTOR IN A LEADING ROLE", False);
 INSERT INTO Nominations VALUES(0, 6897571, "DiCaprio", "ACTOR IN A LEADING ROLE", False);
 INSERT INTO Nominations VALUES(0, 6897572, "Driver", "ACTOR IN A LEADING ROLE", False);
-INSERT INTO Nominations VALUES(0, 6897573, "Phoenix", "ACTOR IN A LEADING ROLE", True);
+INSERT INTO Nominations VALUES(0, 6897573, "Joker", "ACTOR IN A LEADING ROLE", True);
 INSERT INTO Nominations VALUES(0, 6897574, "Pryce", "ACTOR IN A LEADING ROLE", False);
 INSERT INTO Nominations VALUES(0, 6897575, "Hanks", "ACTOR IN A SUPPORTING ROLE", False);
 INSERT INTO Nominations VALUES(0, 6897576, "Hopkins", "ACTOR IN A SUPPORTING ROLE", False);
