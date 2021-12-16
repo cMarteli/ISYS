@@ -1,6 +1,8 @@
 #**********************************
 # Author: Caio Marteli 19598552
-#**Python Script to make sql input files from .csv data
+#**Python Script to help make sql input files from .csv data
+# Previously submitted for Database Systems final assesment 2021
+# Modified for further assesment 2021
 #**********************************
 
 import csv

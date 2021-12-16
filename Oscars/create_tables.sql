@@ -1,4 +1,4 @@
-/* queries.sql: SQL file for table creation in Assignment Oscars */
+/* create_tables.sql: SQL file for table creation in Assignment Oscars */
 /*Author: C Marteli 19598552 Created: 15/12/2021*/
 
 #turns on page scrolling
@@ -50,6 +50,6 @@ CREATE TABLE Nominations(
 	catID VARCHAR(60),		
 	isWinner BOOLEAN NOT NULL,
 	PRIMARY KEY(id),
-	FOREIGN KEY(nomID) REFERENCES Nominee(id),
-	FOREIGN KEY(catID) REFERENCES Category(catID)
+	FOREIGN KEY(nomID) REFERENCES Nominee(id) ON DELETE CASCADE,
+	FOREIGN KEY(catID) REFERENCES Category(catID) ON DELETE CASCADE
 );
